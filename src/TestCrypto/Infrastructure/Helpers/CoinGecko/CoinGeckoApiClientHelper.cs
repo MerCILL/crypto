@@ -1,11 +1,8 @@
-﻿namespace TestCrypto.Infrastructure.Helpers;
+﻿namespace TestCrypto.Infrastructure.Helpers.CoinGecko;
 
 public static class CoinGeckoApiClientHelper
 {
-    public const string BaseUrl = "https://api.coingecko.com/api/v3";
-    public const string ApiKey = "CG-qR4sq8DRRzcaYnoEnaPGzQA6";
-
-    public static async Task<T> GetApiResponse<T>(HttpClient httpClient, string url)
+    public static async Task<T> GetApiResponse<T>(IHttpClientWrapper httpClient, string url)
     {
         var response = await httpClient.GetAsync(url);
         response.EnsureSuccessStatusCode();
