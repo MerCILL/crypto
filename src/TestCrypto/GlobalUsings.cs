@@ -6,3 +6,6 @@ global using TestCrypto.Infrastructure.Responses;
 global using TestCrypto.Infrastructure.Abstractions;
 global using TestCrypto.Infrastructure.Helpers.Abstractions;
 global using TestCrypto.Infrastructure.Helpers.CoinGecko;
+global using AutoMapper;
+global using TestCrypto.Models;
+global using TestCrypto.Abstractions;

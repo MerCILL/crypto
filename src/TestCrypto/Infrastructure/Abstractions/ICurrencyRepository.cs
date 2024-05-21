@@ -2,5 +2,5 @@
 
 public interface ICurrencyRepository
 {
-    Task<ObservableCollection<CurrencyResponse>> GetTopNCurrencies(int n);
+    Task<ObservableCollection<CurrencyResponse>> GetTopNCurrencies(int n, int page);
 }

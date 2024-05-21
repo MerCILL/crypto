@@ -1,4 +1,4 @@
-﻿namespace TestCrypto.Infrastructure.Helpers;
+﻿namespace TestCrypto.Infrastructure.Helpers.CoinGecko;
 
 public static class CoinGeckoApiConstants
 {

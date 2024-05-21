@@ -6,9 +6,10 @@ public class CurrencyRepository(IHttpClientWrapper httpClient) : ICurrencyReposi
 
 
     // https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=10&page=1&sparkline=false&x_cg_demo_api_key=CG-qR4sq8DRRzcaYnoEnaPGzQA6
-    public async Task<ObservableCollection<CurrencyResponse>> GetTopNCurrencies(int n)
+    public async Task<ObservableCollection<CurrencyResponse>> GetTopNCurrencies(int n, int page)
     {
-        var url = CoinGeckoApiUrlBuilder.GetTopNCurrenciesUrl(n);
+        var url = CoinGeckoApiUrlBuilder.GetTopNCurrenciesUrl(n, page);
         return await CoinGeckoApiClientHelper.GetApiResponse<ObservableCollection<CurrencyResponse>>(_httpClient, url);
     }
 }
+
