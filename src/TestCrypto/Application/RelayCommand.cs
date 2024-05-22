@@ -1,6 +1,4 @@
-﻿using System.Windows.Input;
-
-namespace TestCrypto.Infrastructure.Helpers;
+﻿namespace TestCrypto.Application;
 
 public class RelayCommand(Action execute, Func<bool>? canExecute = null) : ICommand
 {

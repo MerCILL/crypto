@@ -1,4 +1,4 @@
-﻿namespace TestCrypto.Infrastructure.Mapper;
+﻿namespace TestCrypto.Application.Mappers;
 
 public class CurrencyMappingProfile : Profile
 {
