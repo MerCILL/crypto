@@ -20,3 +20,5 @@ global using TestCrypto.Application.Mappers;
 global using TestCrypto.Application.Services;
 global using TestCrypto.Infrastructure.Repositories;
 global using TestCrypto.Presentation.ViewModels;
+global using System.Globalization;
+global using System.Windows.Data;
