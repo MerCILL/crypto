@@ -1,4 +1,4 @@
-﻿namespace TestCrypto.Abstractions;
+﻿namespace TestCrypto.Application.Abstractions;
 
 public interface ICurrencyService
 {

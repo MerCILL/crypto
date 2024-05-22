@@ -1,7 +1,4 @@
-﻿using System.ComponentModel;
-using System.Runtime.CompilerServices;
-
-namespace TestCrypto.Models;
+﻿namespace TestCrypto.Models;
 
 public class Currency : INotifyPropertyChanged
 {

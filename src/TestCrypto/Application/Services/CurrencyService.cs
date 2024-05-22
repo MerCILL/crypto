@@ -1,11 +1,6 @@
-﻿namespace TestCrypto.Services;
+﻿namespace TestCrypto.Application.Services;
 
-public interface ICurrencyService
-{
-    Task<ObservableCollection<Currency>> GetTopNCurrencies(int n, int page);
-}
-
-public class CurrencyService(ICurrencyRepository currencyRepository, IMapper mapper) : ICurrencyService, ICurrencyService
+public class CurrencyService(ICurrencyRepository currencyRepository, IMapper mapper) : ICurrencyService
 {
     private readonly ICurrencyRepository _currencyRepository = currencyRepository;
     private readonly IMapper _mapper = mapper;
