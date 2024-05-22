@@ -4,7 +4,7 @@ public class MainViewModel : INotifyPropertyChanged
 {
     private readonly ICurrencyService _currencyService;
     private ObservableCollection<Currency>? _currencies;
-    private int _topN = 10;
+    private int _topN = 100;
     private int _currentPage = 1;
 
     public MainViewModel(ICurrencyService currencyService)

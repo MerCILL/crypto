@@ -2,117 +2,79 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:TestCrypto"
-        xmlns:converters="clr-namespace:TestCrypto.Application.Converters"
-        xmlns:sys="clr-namespace:System;assembly=mscorlib"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="1080" Width="1920">
     <Window.Resources>
-        <converters:IsPositiveConverter x:Key="IsPositive" />
-        <Style TargetType="GridViewColumnHeader">
-            <Setter Property="FontSize" Value="16" />
-            <Setter Property="HorizontalContentAlignment" Value="Center" />
-        </Style>
-        <Style TargetType="ListViewItem">
-            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-        </Style>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../MainWindowStylesDictionary.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
     </Window.Resources>
-    <DockPanel>
-        <ListView ItemsSource="{Binding Currencies}" HorizontalAlignment="Left">
-            <ListView.ItemContainerStyle>
-                <Style TargetType="ListViewItem">
-                    <Setter Property="BorderThickness" Value="0,0,0,1"/>
-                    <Setter Property="BorderBrush" Value="Gray"/>
-                    <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
-                </Style>
-            </ListView.ItemContainerStyle>
-            <ListView.View>
-                <GridView AllowsColumnReorder="False">
-                    <GridViewColumn Header="#" Width="150">
-                        <GridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                <TextBlock Text="{Binding MarketCapRank}" Foreground="Black" TextAlignment="Center" />
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
-                    <GridViewColumn Header="Icon" Width="50">
-                        <GridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                <Image Source="{Binding Image}" Height="30" Width="30"/>
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
-                    <GridViewColumn Header="Coin" Width="150">
-                        <GridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                <TextBlock Text="{Binding Name}" FontWeight="Bold" Foreground="Black" TextAlignment="Center" />
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
-                    <GridViewColumn Header="Symbol" Width="150">
-                        <GridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                <TextBlock Text="{Binding Symbol}" Foreground="Black" TextAlignment="Center" />
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
-
-                    <GridViewColumn Header="Price" Width="150">
-                        <GridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                <TextBlock Text="{Binding CurrentPrice, StringFormat='${0}'}" Foreground="Black" TextAlignment="Center" />
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
-                    <GridViewColumn Header="Price Change (%)" Width="150">
-                        <GridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                <TextBlock Text="{Binding PriceChangePercentage24h, StringFormat='{}{0}%'}" TextAlignment="Center">
-                                    <TextBlock.Style>
-                                        <Style TargetType="TextBlock">
-                                            <Style.Triggers>
-                                                <DataTrigger Binding="{Binding PriceChangePercentage24h}" Value="0">
-                                                    <Setter Property="Foreground" Value="Black"/>
-                                                </DataTrigger>
-                                                <DataTrigger Binding="{Binding PriceChangePercentage24h}" Value="{x:Static sys:Double.NaN}">
-                                                    <Setter Property="Foreground" Value="Black"/>
-                                                </DataTrigger>
-                                                <DataTrigger Binding="{Binding PriceChangePercentage24h, Converter={StaticResource IsPositive}}" Value="True">
-                                                    <Setter Property="Foreground" Value="Green"/>
-                                                </DataTrigger>
-                                                <DataTrigger Binding="{Binding PriceChangePercentage24h, Converter={StaticResource IsPositive}}" Value="False">
-                                                    <Setter Property="Foreground" Value="Red"/>
-                                                </DataTrigger>
-                                            </Style.Triggers>
-                                        </Style>
-                                    </TextBlock.Style>
-                                </TextBlock>
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
-                    <GridViewColumn Header="Volume" Width="150">
-                        <GridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                <TextBlock Text="{Binding TotalVolume, StringFormat='${0}'}" Foreground="Black" TextAlignment="Center" />
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
-                    <GridViewColumn Header="Market Cap" Width="150">
-                        <GridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                <TextBlock Text="{Binding MarketCap, StringFormat='${0}'}" Foreground="Black" TextAlignment="Center" />
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
-                </GridView>
-            </ListView.View>
-        </ListView>
-        <StackPanel Orientation="Vertical" Width="100">
-            <TextBox Text="{Binding TopN, UpdateSourceTrigger=PropertyChanged}" />
-            <Button Content="Update" Command="{Binding UpdateCurrenciesCommand}" />
-            <Button Content="Next Page" Command="{Binding NextPageCommand}" />
-            <Button Content="Previous Page" Command="{Binding PreviousPageCommand}" />
-        </StackPanel>
-    </DockPanel>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <DataGrid Grid.Row="1" Grid.Column="1" Grid.RowSpan="6" Grid.ColumnSpan="6" ItemsSource="{Binding Currencies}" AutoGenerateColumns="False" IsReadOnly="True" BorderThickness="1,1,1,1" HorizontalScrollBarVisibility="Visible" GridLinesVisibility="Horizontal">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="#" Binding="{Binding MarketCapRank}" Width="0.3*" MinWidth="30" ElementStyle="{StaticResource CenteredTextBlock}"/>
+                <DataGridTemplateColumn Header="Icon" Width="0.3*" MinWidth="50">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Image Source="{Binding Image}" Height="30" Width="30"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTextColumn Header="Coin" Binding="{Binding Name}" Width="0.3*" MinWidth="100" ElementStyle="{StaticResource CenteredTextBlock}"/>
+                <DataGridTextColumn Header="Symbol" Binding="{Binding Symbol}" Width="0.1*" MinWidth="50" ElementStyle="{StaticResource CenteredTextBlock}"/>
+                <DataGridTextColumn Header="Price" Binding="{Binding CurrentPrice, StringFormat='${0}'}" Width="*" MinWidth="100" ElementStyle="{StaticResource CenteredTextBlock}"/>
+                <DataGridTemplateColumn Header="Price Change (%)" Width="*" MinWidth="100">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding PriceChangePercentage24h, StringFormat='{}{0}%'}" MinWidth="100" Style="{StaticResource PriceChangeTextBlock}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTextColumn Header="Volume" Binding="{Binding TotalVolume, StringFormat='${0}'}" Width="*" MinWidth="100" ElementStyle="{StaticResource CenteredTextBlock}"/>
+                <DataGridTextColumn Header="Market Cap" Binding="{Binding MarketCap, StringFormat='${0}'}" Width="*" MinWidth="100" ElementStyle="{StaticResource CenteredTextBlock}"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        <ScrollViewer Grid.Row="7" Grid.Column="3" Grid.ColumnSpan="3" Margin="0,30,0,0" VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Auto">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="10"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="20"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="20"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <TextBox Grid.Column="0" Text="{Binding TopN, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource TextBoxStyle}" />
+                <Button Grid.Column="2" Content="Update" Command="{Binding UpdateCurrenciesCommand}" Style="{StaticResource ButtonStyle}" />
+                <Button Grid.Column="4" Content="Next Page" Command="{Binding NextPageCommand}" Style="{StaticResource ButtonStyle}" />
+                <Button Grid.Column="6" Content="Previous Page" Command="{Binding PreviousPageCommand}" Style="{StaticResource ButtonStyle}" />
+            </Grid>
+        </ScrollViewer>
+    </Grid>
 </Window>
