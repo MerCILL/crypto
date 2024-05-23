@@ -61,4 +61,18 @@ public class MainViewModel : INotifyPropertyChanged
     {
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
+
+    public ICommand NavigateToCurrencyDetailsCommand => new RelayCommand<Currency>(NavigateToCurrencyDetailsPage!);
+
+    private void NavigateToCurrencyDetailsPage(Currency currency)
+    {
+        if (currency != null)
+        {
+            var viewModel = new CurrencyDetailsViewModel(_currencyService, currency.Id);
+            var detailsPage = new CurrencyDetailsPage(viewModel);
+            var mainWindow = (MainWindow)System.Windows.Application.Current.MainWindow;
+            mainWindow.MainFrame.Navigate(detailsPage);
+        }
+    }
 }
+

@@ -1,9 +1,15 @@
 ﻿namespace TestCrypto.Application;
 
-public class RelayCommand(Action execute, Func<bool>? canExecute = null) : ICommand
+public class RelayCommand<T> : ICommand
 {
-    private readonly Action _execute = execute;
-    private readonly Func<bool>? _canExecute = canExecute;
+    private readonly Action<T?> _execute;
+    private readonly Func<T?, bool>? _canExecute;
+
+    public RelayCommand(Action<T?> execute, Func<T?, bool>? canExecute = null)
+    {
+        _execute = execute ?? throw new ArgumentNullException(nameof(execute));
+        _canExecute = canExecute;
+    }
 
     public event EventHandler? CanExecuteChanged
     {
@@ -13,12 +19,20 @@ public class RelayCommand(Action execute, Func<bool>? canExecute = null) : IComm
 
     public bool CanExecute(object? parameter)
     {
-        return _canExecute == null || _canExecute();
+        return _canExecute == null || _canExecute((T?)parameter);
     }
 
     public void Execute(object? parameter)
     {
-        _execute();
+        _execute((T?)parameter);
+    }
+}
+
+public class RelayCommand : RelayCommand<object>
+{
+    public RelayCommand(Action execute, Func<bool>? canExecute = null)
+        : base(_ => execute(), _ => canExecute == null || canExecute())
+    {
     }
 }
 

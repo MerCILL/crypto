@@ -2,15 +2,20 @@
 
 public partial class MainPage : Page
 {
-    private readonly ICurrencyService _currencyService;
     private readonly MainViewModel _mainViewModel;
-    public MainPage(ICurrencyService currencyService, MainViewModel mainViewModel)
+    public MainPage(MainViewModel mainViewModel)
     {
-        InitializeComponent();
-
-        _currencyService = currencyService;
         _mainViewModel = mainViewModel;
 
+        InitializeComponent();
+
         DataContext = mainViewModel;
+    }
+
+    private void OnDataGridDoubleClick(object sender, MouseButtonEventArgs e)
+    {
+        var currency = (Currency)((DataGrid)sender).SelectedItem;
+        if (currency != null && _mainViewModel.NavigateToCurrencyDetailsCommand.CanExecute(currency))
+            _mainViewModel.NavigateToCurrencyDetailsCommand.Execute(currency);
     }
 }

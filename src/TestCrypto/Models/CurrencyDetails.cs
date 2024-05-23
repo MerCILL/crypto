@@ -6,6 +6,7 @@ public class CurrencyDetails : INotifyPropertyChanged
     private string _symbol = null!;
     private string _name = null!;
     private int _marketCapRank;
+    private Dictionary<string, string> _image = null!;
     private MarketData _marketData = null!;
     private List<Ticker> _tickers = null!;
 
@@ -61,6 +62,20 @@ public class CurrencyDetails : INotifyPropertyChanged
         }
     }
 
+    public Dictionary<string, string> Image
+    {
+        get { return _image; }
+        set
+        {
+            if (_image != value)
+            {
+                _image = value;
+                OnPropertyChanged(nameof(Image));
+            }
+        }
+    }
+
+
     public MarketData MarketData
     {
         get { return _marketData; }
@@ -100,6 +115,7 @@ public class MarketData : INotifyPropertyChanged
 {
     private Dictionary<string, decimal> _marketCap = null!;
     private Dictionary<string, decimal> _totalVolume = null!;
+    private Dictionary<string, decimal> _currentPrice = null!;
     private decimal? _circulatingSupply;
     private decimal? _priceChange24h;
     private decimal? _priceChangePercentage24h;
@@ -126,6 +142,19 @@ public class MarketData : INotifyPropertyChanged
             {
                 _totalVolume = value;
                 OnPropertyChanged(nameof(TotalVolume));
+            }
+        }
+    }
+
+    public Dictionary<string, decimal> CurrentPrice
+    {
+        get { return _currentPrice; }
+        set
+        {
+            if (_currentPrice != value)
+            {
+                _currentPrice = value;
+                OnPropertyChanged(nameof(CurrentPrice));
             }
         }
     }
@@ -181,6 +210,7 @@ public class Ticker : INotifyPropertyChanged
 {
     private string _base = null!;
     private string _target = null!;
+    private string _tradeUrl = null!;
     private Market _market = null!;
 
     public string Base
@@ -205,6 +235,19 @@ public class Ticker : INotifyPropertyChanged
             {
                 _target = value;
                 OnPropertyChanged(nameof(Target));
+            }
+        }
+    }
+
+    public string TradeUrl
+    {
+        get { return _tradeUrl; }
+        set
+        {
+            if (_tradeUrl != value)
+            {
+                _tradeUrl = value;
+                OnPropertyChanged(nameof(TradeUrl));
             }
         }
     }

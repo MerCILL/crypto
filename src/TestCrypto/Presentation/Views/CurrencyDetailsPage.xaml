@@ -1,0 +1,103 @@
+﻿<Page x:Class="TestCrypto.Presentation.Views.CurrencyDetailsPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:TestCrypto.Presentation.Views"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="CurrencyDetailsPage">
+
+    <Page.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../CurrencyDetailsPageStylesDictionary.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Page.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Button Grid.Row="0" Command="{Binding NavigateBackCommand}" HorizontalAlignment="Left" Margin="25" Style="{StaticResource ButtonStyle}">
+            <Button.Content>
+                <TextBlock>← Back</TextBlock>
+            </Button.Content>
+        </Button>
+        <Grid Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <ScrollViewer>
+                <Border BorderBrush="Gray" BorderThickness="2" Padding="10" CornerRadius="10" Margin="20">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid Grid.Row="0" Grid.Column="0" Margin="20,30,0,0">
+                            <StackPanel Orientation="Vertical" HorizontalAlignment="Center">
+                                <StackPanel Orientation="Horizontal">
+                                    <Image Source="{Binding CurrencyDetails.Image[large]}" Width="30" Height="30" />
+                                    <TextBlock Text="{Binding CurrencyDetails.Name}" FontSize="24" FontWeight="Bold" Margin="5,0"/>
+                                    <TextBlock Text="{Binding CurrencyDetails.Symbol}" FontSize="24" FontWeight="Bold" Margin="5,0"/>
+                                    <TextBlock Text="{Binding CurrencyDetails.MarketCapRank, StringFormat='Rank: {0}'}" FontSize="24" FontWeight="Bold" Margin="5,0"/>
+                                </StackPanel>
+                                <TextBlock Text="{Binding CurrencyDetails.MarketData.CurrentPrice[usd], StringFormat='{}{0}$'}" FontSize="36" FontWeight="Bold" TextAlignment="Center"/>
+                            </StackPanel>
+                        </Grid>
+
+                        <Grid Grid.Row="1" Grid.Column="0" Margin="20,10,0,0">
+                            <StackPanel Orientation="Vertical" HorizontalAlignment="Center">
+                                <TextBlock FontSize="24" FontWeight="Bold" TextAlignment="Center">
+                                    <Run Text="Market Cap: " Foreground="Gray" />
+                                    <Run Text="{Binding CurrencyDetails.MarketData.MarketCap[usd], StringFormat='{}{0}$'}" Foreground="Black" />
+                                </TextBlock>
+                                <TextBlock FontSize="24" FontWeight="Bold" TextAlignment="Center">
+                                    <Run Text="Total Volume: " Foreground="Gray" />
+                                    <Run Text="{Binding CurrencyDetails.MarketData.TotalVolume[usd],StringFormat='{}{0}$'}" Foreground="Black" />
+                                </TextBlock>
+                                <TextBlock FontSize="24" FontWeight="Bold" TextAlignment="Center">
+                                    <Run Text="Circulating Supply: " Foreground="Gray" />
+                                    <Run Text="{Binding CurrencyDetails.MarketData.CirculatingSupply, StringFormat='{}{0}$'}" Foreground="Black" />
+                                </TextBlock>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Price Change 24h: " Foreground="Gray" FontSize="24" FontWeight="Bold" TextAlignment="Center"/>
+                                    <TextBlock Text="{Binding CurrencyDetails.MarketData.PriceChange24h,StringFormat='{}{0}$'}" FontSize="24" FontWeight="Bold" TextAlignment="Center" Style="{StaticResource PriceChangeTextBlock}"/>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Price Change Percentage 24h: " Foreground="Gray" FontSize="24" FontWeight="Bold" TextAlignment="Center"/>
+                                    <TextBlock Text="{Binding CurrencyDetails.MarketData.PriceChangePercentage24h,StringFormat='{}{0}$'}" FontSize="24" FontWeight="Bold" TextAlignment="Center" Style="{StaticResource PriceChangeTextBlock}"/>
+                                </StackPanel>
+                            </StackPanel>
+                        </Grid>
+
+                        <DataGrid ItemsSource="{Binding CurrencyDetails.Tickers}" Grid.Row="2" AutoGenerateColumns="False" IsReadOnly="True"  
+                              BorderThickness="1,1,1,1" HorizontalScrollBarVisibility="Visible" 
+                              GridLinesVisibility="Horizontal" HorizontalAlignment="Center" SelectionUnit="Cell"
+                              MaxHeight="500">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Market" Binding="{Binding Market.Name}"/>
+                                <DataGridTextColumn Header="Base" Binding="{Binding Base}"/>
+                                <DataGridTextColumn Header="Target" Binding="{Binding Target}"/>
+                                <DataGridTemplateColumn Header="Trade Url">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock>
+                                                <Hyperlink NavigateUri="{Binding TradeUrl}" RequestNavigate="Hyperlink_RequestNavigate">
+                                                    <TextBlock Text="{Binding TradeUrl}"/>
+                                                </Hyperlink>
+                                            </TextBlock>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </Grid>
+                </Border>
+            </ScrollViewer>
+        </Grid>
+    </Grid>
+</Page>

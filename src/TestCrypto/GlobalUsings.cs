@@ -24,4 +24,5 @@ global using System.Globalization;
 global using System.Windows.Data;
 global using System.Windows.Controls;
 global using TestCrypto.Presentation.Views;
-
+global using System.Diagnostics;
+global using System.Windows.Navigation;

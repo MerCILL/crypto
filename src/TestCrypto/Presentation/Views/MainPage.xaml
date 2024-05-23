@@ -10,7 +10,7 @@
     <Page.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="../MainWindowStylesDictionary.xaml"/>
+                <ResourceDictionary Source="../MainPageStylesDictionary.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Page.Resources>
@@ -37,7 +37,10 @@
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <DataGrid Grid.Row="1" Grid.Column="1" Grid.RowSpan="6" Grid.ColumnSpan="6" ItemsSource="{Binding Currencies}" AutoGenerateColumns="False" IsReadOnly="True" BorderThickness="1,1,1,1" HorizontalScrollBarVisibility="Visible" GridLinesVisibility="Horizontal">
+        <DataGrid Grid.Row="1" Grid.Column="1" Grid.RowSpan="6" Grid.ColumnSpan="6"
+                ItemsSource="{Binding Currencies}" AutoGenerateColumns="False" IsReadOnly="True" 
+                BorderThickness="1,1,1,1" HorizontalScrollBarVisibility="Visible" 
+                GridLinesVisibility="Horizontal" MouseDoubleClick="OnDataGridDoubleClick">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="#" Binding="{Binding MarketCapRank}" Width="0.3*" MinWidth="30" ElementStyle="{StaticResource CenteredTextBlock}"/>
                 <DataGridTemplateColumn Header="Icon" Width="0.3*" MinWidth="50">
@@ -74,9 +77,10 @@
                 </Grid.ColumnDefinitions>
                 <TextBox Grid.Column="0" Text="{Binding TopN, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource TextBoxStyle}" />
                 <Button Grid.Column="2" Content="Update" Command="{Binding UpdateCurrenciesCommand}" Style="{StaticResource ButtonStyle}" />
-                <Button Grid.Column="4" Content="Next Page" Command="{Binding NextPageCommand}" Style="{StaticResource ButtonStyle}" />
-                <Button Grid.Column="6" Content="Previous Page" Command="{Binding PreviousPageCommand}" Style="{StaticResource ButtonStyle}" />
+                <Button Grid.Column="4" Content="Next" Command="{Binding NextPageCommand}" Style="{StaticResource ButtonStyle}" />
+                <Button Grid.Column="6" Content="Previous" Command="{Binding PreviousPageCommand}" Style="{StaticResource ButtonStyle}" />
             </Grid>
         </ScrollViewer>
+        <Button Grid.Row="7" Grid.Column="6" Content="Close Application" Command="{Binding NavigateToClosePageCommand}" Style="{StaticResource ButtonStyle}" />
     </Grid>
 </Page>
