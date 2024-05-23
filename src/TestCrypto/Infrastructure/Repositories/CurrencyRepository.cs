@@ -11,5 +11,12 @@ public class CurrencyRepository(IHttpClientWrapper httpClient) : ICurrencyReposi
         var url = CoinGeckoApiUrlBuilder.GetTopNCurrenciesUrl(n, page);
         return await CoinGeckoApiClientHelper.GetApiResponse<ObservableCollection<CurrencyResponse>>(_httpClient, url);
     }
+
+    // https://api.coingecko.com/api/v3/coins/bitcoin?localization=false&tickers=true&market_data=true&community_data=false&developer_data=false&sparkline=false&x_cg_demo_api_key=CG-qR4sq8DRRzcaYnoEnaPGzQA6
+    public async Task<CurrencyDetailsResponse> GetCurrencyDetails(string id)
+    {
+        var url = CoinGeckoApiUrlBuilder.GetCurrencyDetailsUrl(id);
+        return await CoinGeckoApiClientHelper.GetApiResponse<CurrencyDetailsResponse>(_httpClient, url);
+    }
 }
 

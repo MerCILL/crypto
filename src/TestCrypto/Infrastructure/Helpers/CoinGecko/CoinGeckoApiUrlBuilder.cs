@@ -12,4 +12,16 @@ public static class CoinGeckoApiUrlBuilder
             + "&sparkline=false"
             + $"&x_cg_demo_api_key={CoinGeckoApiConstants.ApiKey}";
     }
+
+    public static string GetCurrencyDetailsUrl(string id)
+    {
+        return CoinGeckoApiConstants.BaseUrl + "/coins/" + id
+            + "?localization=false"
+            + "&tickers=true"
+            + "&market_data=true"
+            + "&community_data=false"
+            + "&developer_data=false"
+            + "&sparkline=false"
+            + $"&x_cg_demo_api_key={CoinGeckoApiConstants.ApiKey}";
+    }
 }

@@ -11,5 +11,11 @@ public class CurrencyService(ICurrencyRepository currencyRepository, IMapper map
         var currencies = _mapper.Map<ObservableCollection<Currency>>(response);
         return currencies;
     }
+
+    public async Task<CurrencyDetails> GetCurrencyDetails(string id)
+    {
+        var response = await _currencyRepository.GetCurrencyDetails(id);
+        return _mapper.Map<CurrencyDetails>(response);
+    }
 }
 

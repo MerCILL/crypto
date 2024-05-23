@@ -1,0 +1,82 @@
+﻿<Page x:Class="TestCrypto.Presentation.Views.MainPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:TestCrypto.Presentation.Views"
+      mc:Ignorable="d" 
+      d:DesignHeight="1080" d:DesignWidth="1920"
+      Title="MainPage">
+    <Page.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../MainWindowStylesDictionary.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Page.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <DataGrid Grid.Row="1" Grid.Column="1" Grid.RowSpan="6" Grid.ColumnSpan="6" ItemsSource="{Binding Currencies}" AutoGenerateColumns="False" IsReadOnly="True" BorderThickness="1,1,1,1" HorizontalScrollBarVisibility="Visible" GridLinesVisibility="Horizontal">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="#" Binding="{Binding MarketCapRank}" Width="0.3*" MinWidth="30" ElementStyle="{StaticResource CenteredTextBlock}"/>
+                <DataGridTemplateColumn Header="Icon" Width="0.3*" MinWidth="50">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Image Source="{Binding Image}" Height="30" Width="30"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTextColumn Header="Coin" Binding="{Binding Name}" Width="0.3*" MinWidth="100" ElementStyle="{StaticResource CenteredTextBlock}"/>
+                <DataGridTextColumn Header="Symbol" Binding="{Binding Symbol}" Width="0.1*" MinWidth="50" ElementStyle="{StaticResource CenteredTextBlock}"/>
+                <DataGridTextColumn Header="Price" Binding="{Binding CurrentPrice, StringFormat='${0}'}" Width="*" MinWidth="100" ElementStyle="{StaticResource CenteredTextBlock}"/>
+                <DataGridTemplateColumn Header="Price Change (%)" Width="*" MinWidth="100">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding PriceChangePercentage24h, StringFormat='{}{0}%'}" MinWidth="100" Style="{StaticResource PriceChangeTextBlock}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTextColumn Header="Volume" Binding="{Binding TotalVolume, StringFormat='${0}'}" Width="*" MinWidth="100" ElementStyle="{StaticResource CenteredTextBlock}"/>
+                <DataGridTextColumn Header="Market Cap" Binding="{Binding MarketCap, StringFormat='${0}'}" Width="*" MinWidth="100" ElementStyle="{StaticResource CenteredTextBlock}"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        <ScrollViewer Grid.Row="7" Grid.Column="3" Grid.ColumnSpan="3" Margin="0,30,0,0" VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Auto">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="10"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="20"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="20"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <TextBox Grid.Column="0" Text="{Binding TopN, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource TextBoxStyle}" />
+                <Button Grid.Column="2" Content="Update" Command="{Binding UpdateCurrenciesCommand}" Style="{StaticResource ButtonStyle}" />
+                <Button Grid.Column="4" Content="Next Page" Command="{Binding NextPageCommand}" Style="{StaticResource ButtonStyle}" />
+                <Button Grid.Column="6" Content="Previous Page" Command="{Binding PreviousPageCommand}" Style="{StaticResource ButtonStyle}" />
+            </Grid>
+        </ScrollViewer>
+    </Grid>
+</Page>

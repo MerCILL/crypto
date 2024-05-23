@@ -22,3 +22,6 @@ global using TestCrypto.Infrastructure.Repositories;
 global using TestCrypto.Presentation.ViewModels;
 global using System.Globalization;
 global using System.Windows.Data;
+global using System.Windows.Controls;
+global using TestCrypto.Presentation.Views;
+
