@@ -2,11 +2,8 @@
 
 public partial class CurrencyDetailsPage : Page
 {
-    private readonly CurrencyDetailsViewModel _currencyDetailsViewModel;
     public CurrencyDetailsPage(CurrencyDetailsViewModel currencyDetailsViewModel)
     {
-        _currencyDetailsViewModel = currencyDetailsViewModel;
-
         InitializeComponent();
         DataContext = currencyDetailsViewModel;
     }

@@ -1,33 +1,27 @@
-﻿using System.DirectoryServices;
-
-namespace TestCrypto.Presentation.ViewModels;
+﻿namespace TestCrypto.Presentation.ViewModels;
 
 public class MainViewModel : INotifyPropertyChanged
 {
     private readonly ICurrencyService _currencyService;
     private ObservableCollection<Currency>? _currencies;
+    private ObservableCollection<Currency>? _searchResults;
     private int _topN = 100;
     private int _currentPage = 1;
     private string _searchText = string.Empty;
-    private ObservableCollection<Currency>? _searchResults;
 
     public MainViewModel(ICurrencyService currencyService)
     {
         _currencyService = currencyService;
-        var _ = LoadTopCurrencies();
+        _ = LoadTopCurrencies();
     }
 
-    public string SearchText
+    public ObservableCollection<Currency>? Currencies
     {
-        get => _searchText;
+        get => _currencies;
         set
         {
-            if (_searchText != value)
-            {
-                _searchText = value;
-                OnPropertyChanged(nameof(SearchText));
-                SearchCommand.Execute(_searchText);
-            }
+            _currencies = value;
+            OnPropertyChanged(nameof(Currencies));
         }
     }
 
@@ -41,13 +35,17 @@ public class MainViewModel : INotifyPropertyChanged
         }
     }
 
-    public ObservableCollection<Currency>? Currencies
+    public string SearchText
     {
-        get => _currencies;
+        get => _searchText;
         set
         {
-            _currencies = value;
-            OnPropertyChanged(nameof(Currencies));
+            if (_searchText != value)
+            {
+                _searchText = value;
+                OnPropertyChanged(nameof(SearchText));
+                SearchCommand.Execute(_searchText);
+            }
         }
     }
 
@@ -78,10 +76,13 @@ public class MainViewModel : INotifyPropertyChanged
         }
     });
 
-    private async Task LoadTopCurrencies()
+    public ICommand NavigateToCurrencyDetailsCommand => new RelayCommand<Currency?>(NavigateToCurrencyDetailsPage);
+
+    public ICommand SearchCommand => new RelayCommand<string>(async (searchText) =>
     {
-        Currencies = await _currencyService.GetTopNCurrencies(TopN, _currentPage);
-    }
+        searchText ??= string.Empty;
+        await SearchCurrencies(searchText);
+    });
 
     public event PropertyChangedEventHandler? PropertyChanged;
 
@@ -90,9 +91,12 @@ public class MainViewModel : INotifyPropertyChanged
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
 
-    public ICommand NavigateToCurrencyDetailsCommand => new RelayCommand<Currency>(NavigateToCurrencyDetailsPage!);
+    private async Task LoadTopCurrencies()
+    {
+        Currencies = await _currencyService.GetTopNCurrencies(TopN, _currentPage);
+    }
 
-    private void NavigateToCurrencyDetailsPage(Currency currency)
+    private void NavigateToCurrencyDetailsPage(Currency? currency)
     {
         if (currency != null)
         {
@@ -102,12 +106,6 @@ public class MainViewModel : INotifyPropertyChanged
             mainWindow.MainFrame.Navigate(detailsPage);
         }
     }
-
-    public ICommand SearchCommand => new RelayCommand<string>(async (searchText) =>
-    {
-        searchText ??= string.Empty;
-        await SearchCurrencies(searchText);
-    });
 
     private async Task SearchCurrencies(string searchText)
     {
@@ -123,4 +121,5 @@ public class MainViewModel : INotifyPropertyChanged
         }
     }
 }
+
 

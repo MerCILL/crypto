@@ -10,7 +10,7 @@ public class CurrencyDetailsViewModel : INotifyPropertyChanged
     {
         _currencyService = currencyService;
         _currencyId = currencyId;
-        var _ = LoadCurrencyDetails();
+        _ = LoadCurrencyDetails();
     }
 
     public CurrencyDetails? CurrencyDetails
@@ -22,6 +22,8 @@ public class CurrencyDetailsViewModel : INotifyPropertyChanged
             OnPropertyChanged(nameof(CurrencyDetails));
         }
     }
+
+    public ICommand NavigateBackCommand => new RelayCommand(NavigateBack);
 
     public event PropertyChangedEventHandler? PropertyChanged;
 
@@ -35,16 +37,13 @@ public class CurrencyDetailsViewModel : INotifyPropertyChanged
         CurrencyDetails = await _currencyService.GetCurrencyDetails(_currencyId);
     }
 
-    public ICommand NavigateBackCommand => new RelayCommand(NavigateBack);
-
     private void NavigateBack()
     {
-        var mainWindow = (MainWindow)System.Windows.Application.Current.MainWindow;
-
-        var mainViewModel = new MainViewModel(_currencyService);
-
-        var mainPage = new MainPage(mainViewModel);
-
-        mainWindow.MainFrame.Navigate(mainPage);
+        if (System.Windows.Application.Current.MainWindow is MainWindow mainWindow)
+        {
+            var mainViewModel = new MainViewModel(_currencyService);
+            var mainPage = new MainPage(mainViewModel);
+            mainWindow.MainFrame.Navigate(mainPage);
+        }
     }
 }

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Windows.Controls.Primitives;
-
-namespace TestCrypto.Presentation.Views;
+﻿namespace TestCrypto.Presentation.Views;
 
 public partial class MainPage : Page
 {
