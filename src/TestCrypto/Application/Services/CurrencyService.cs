@@ -17,5 +17,37 @@ public class CurrencyService(ICurrencyRepository currencyRepository, IMapper map
         var response = await _currencyRepository.GetCurrencyDetails(id);
         return _mapper.Map<CurrencyDetails>(response);
     }
+
+    public async Task<ObservableCollection<Currency>> SearchCurrenciesByName(string name)
+    {
+        var currencies = new ObservableCollection<Currency>();
+        for (int page = 1; page <= 4; page++)
+        {
+            var response = await _currencyRepository.GetTopNCurrencies(250, page);
+            var pageCurrencies = _mapper.Map<ObservableCollection<Currency>>(response);
+            var filteredCurrencies = new ObservableCollection<Currency>(pageCurrencies.Where(c => c.Name.Contains(name, StringComparison.OrdinalIgnoreCase)));
+            foreach (var currency in filteredCurrencies)
+            {
+                currencies.Add(currency);
+            }
+        }
+        return currencies;
+    }
+
+    public async Task<ObservableCollection<Currency>> SearchCurrenciesByCode(string code)
+    {
+        var currencies = new ObservableCollection<Currency>();
+        for (int page = 1; page <= 4; page++)
+        {
+            var response = await _currencyRepository.GetTopNCurrencies(250, page);
+            var pageCurrencies = _mapper.Map<ObservableCollection<Currency>>(response);
+            var filteredCurrencies = new ObservableCollection<Currency>(pageCurrencies.Where(c => c.Symbol.Contains(code, StringComparison.OrdinalIgnoreCase)));
+            foreach (var currency in filteredCurrencies)
+            {
+                currencies.Add(currency);
+            }
+        }
+        return currencies;
+    }
 }
 

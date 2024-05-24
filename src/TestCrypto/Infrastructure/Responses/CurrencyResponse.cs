@@ -69,7 +69,7 @@ public record CurrencyResponse
     public decimal? Atl { get; init; }
 
     [JsonProperty("atl_change_percentage")]
-    public decimal? AtlChangePercentage { get; init; }
+    public double? AtlChangePercentage { get; init; }
 
     [JsonProperty("atl_date")]
     public DateTime AtlDate { get; init; }

@@ -24,7 +24,7 @@ public class Currency : INotifyPropertyChanged
     private decimal _athChangePercentage;
     private DateTime _athDate;
     private decimal _atl;
-    private decimal _atlChangePercentage;
+    private double _atlChangePercentage;
     private DateTime _atlDate;
     private DateTime _lastUpdated;
 
@@ -314,7 +314,7 @@ public class Currency : INotifyPropertyChanged
         }
     }
 
-    public decimal AtlChangePercentage
+    public double AtlChangePercentage
     {
         get { return _atlChangePercentage; }
         set

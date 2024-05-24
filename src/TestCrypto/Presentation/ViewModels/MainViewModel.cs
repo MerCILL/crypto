@@ -1,4 +1,6 @@
-﻿namespace TestCrypto.Presentation.ViewModels;
+﻿using System.DirectoryServices;
+
+namespace TestCrypto.Presentation.ViewModels;
 
 public class MainViewModel : INotifyPropertyChanged
 {
@@ -6,11 +8,37 @@ public class MainViewModel : INotifyPropertyChanged
     private ObservableCollection<Currency>? _currencies;
     private int _topN = 100;
     private int _currentPage = 1;
+    private string _searchText = string.Empty;
+    private ObservableCollection<Currency>? _searchResults;
 
     public MainViewModel(ICurrencyService currencyService)
     {
         _currencyService = currencyService;
         var _ = LoadTopCurrencies();
+    }
+
+    public string SearchText
+    {
+        get => _searchText;
+        set
+        {
+            if (_searchText != value)
+            {
+                _searchText = value;
+                OnPropertyChanged(nameof(SearchText));
+                SearchCommand.Execute(_searchText);
+            }
+        }
+    }
+
+    public ObservableCollection<Currency>? SearchResults
+    {
+        get => _searchResults;
+        set
+        {
+            _searchResults = value;
+            OnPropertyChanged(nameof(SearchResults));
+        }
     }
 
     public ObservableCollection<Currency>? Currencies
@@ -72,6 +100,26 @@ public class MainViewModel : INotifyPropertyChanged
             var detailsPage = new CurrencyDetailsPage(viewModel);
             var mainWindow = (MainWindow)System.Windows.Application.Current.MainWindow;
             mainWindow.MainFrame.Navigate(detailsPage);
+        }
+    }
+
+    public ICommand SearchCommand => new RelayCommand<string>(async (searchText) =>
+    {
+        searchText ??= string.Empty;
+        await SearchCurrencies(searchText);
+    });
+
+    private async Task SearchCurrencies(string searchText)
+    {
+        if (string.IsNullOrEmpty(searchText))
+        {
+            SearchResults = null;
+        }
+        else
+        {
+            SearchResults = searchText.Length == 3
+                ? await _currencyService.SearchCurrenciesByCode(searchText)
+                : await _currencyService.SearchCurrenciesByName(searchText);
         }
     }
 }
